@@ -24,8 +24,17 @@ class JogoQC {
             for(int i=0;i<(table_size*table_size);i++) qb.push_back(i);
         }
 
-        void embaralhar() {
-            std::random_shuffle(qb.begin(), qb.end());
+        JogoQC embaralhar(int qnt_movs) {
+            JogoQC jg = *this;
+            while(qnt_movs--) {
+                int val = rand()%4;
+                if(val == 0) jg = jg.moverBaixo();
+                else if(val == 1) jg = jg.moverCima();
+                else if(val == 2) jg = jg.moverEsquerda();
+                else jg = jg.moverDireita();
+            } 
+            jg.zerarJogadas();
+            return jg;
         }
 
         void zerarJogadas() {
@@ -190,10 +199,7 @@ class JogoQC {
 int main() {
     srand(time(nullptr));
     JogoQC jogo(3);
-    //jogo.embaralhar();
-    jogo = jogo.moverBaixo();
-    jogo = jogo.moverBaixo();
-    jogo.zerarJogadas();
+    jogo = jogo.embaralhar(120);
     std::cout << jogo << std::endl;
     JogoQC solucao = jogo.solucionar();
     std::cout << solucao << std::endl << solucao.resultadosDosMovimentos() << std::endl;
