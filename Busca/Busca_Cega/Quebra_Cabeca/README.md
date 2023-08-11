@@ -1,0 +1,1 @@
+![Resultado_Quebra_Cabeca](./Resultado_Quebra_Cabeca.png)
