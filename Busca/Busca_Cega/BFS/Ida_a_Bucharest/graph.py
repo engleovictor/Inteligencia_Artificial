@@ -22,20 +22,19 @@ class graph():
 
     def mostrarCaminhoDePara(self, vert1: str, vert2: str) -> list:
         qverts = []
-        alrverts = []
+        # alrverts = []
         qverts.append([vert1,[]])
 
         nv = None
         av = None
-        qnt = 0
 
         while nv != vert2:
             nv = qverts[0][0]
             av = qverts[0][1].copy()
             qverts.pop(0)
 
-            if nv in alrverts:
-                continue
+            # if nv in alrverts:
+            #     continue
 
             av.append(nv)
 

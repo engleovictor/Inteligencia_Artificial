@@ -138,7 +138,7 @@ class JogoQC {
         JogoQC solucionar() {
             bool status = checarObjetivo();
             std::queue<JogoQC> jogos;
-            std::set<JogoQC> jogos_anteriores;
+            //std::set<JogoQC> jogos_anteriores;
             jogos.push(*this);
             JogoQC jg;
             while(!status) {
@@ -147,29 +147,29 @@ class JogoQC {
 
                 jogos.pop();
 
-                if(jg != jgm && (jogos_anteriores.find(jgm) == jogos_anteriores.end())) {
-                    jogos_anteriores.insert(jgm);
+                if(jg != jgm     ){//&& (jogos_anteriores.find(jgm) == jogos_anteriores.end())) {
+                    //jogos_anteriores.insert(jgm);
                     jogos.push(jgm);
                 }
 
                 jgm = jg.moverBaixo();
 
-                if(jg != jgm && (jogos_anteriores.find(jgm) == jogos_anteriores.end())) {
-                    jogos_anteriores.insert(jgm);
+                if(jg != jgm     ){//&& (jogos_anteriores.find(jgm) == jogos_anteriores.end())) {
+                    //jogos_anteriores.insert(jgm);
                     jogos.push(jgm);
                 }
 
                 jgm = jg.moverDireita();
 
-                if(jg != jgm && (jogos_anteriores.find(jgm) == jogos_anteriores.end())) {
-                    jogos_anteriores.insert(jgm);
+                if(jg != jgm     ){//&& (jogos_anteriores.find(jgm) == jogos_anteriores.end())) {
+                    //jogos_anteriores.insert(jgm);
                     jogos.push(jgm);
                 }
 
                 jgm = jg.moverEsquerda();
 
-                if(jg != jgm && (jogos_anteriores.find(jgm) == jogos_anteriores.end())) {
-                    jogos_anteriores.insert(jgm);
+                if(jg != jgm     ){//&& (jogos_anteriores.find(jgm) == jogos_anteriores.end())) {
+                    //jogos_anteriores.insert(jgm);
                     jogos.push(jgm);
                 }
 
