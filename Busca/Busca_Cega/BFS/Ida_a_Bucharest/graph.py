@@ -5,6 +5,10 @@ class graph():
         self.edges = set()
         self.verts = {}
 
+    def __len__(self):
+        return self.verts.__len__()
+        
+
     def addEdge(self, new_edge: edge):
         self.edges.add(new_edge)
         
@@ -22,7 +26,7 @@ class graph():
 
     def mostrarCaminhoDePara(self, vert1: str, vert2: str) -> list:
         qverts = []
-        # alrverts = []
+        # alrverts = set{}
         qverts.append([vert1,[]])
 
         nv = None
@@ -35,6 +39,8 @@ class graph():
 
             # if nv in alrverts:
             #     continue
+
+            # alrverts.add(nv)
 
             av.append(nv)
 
