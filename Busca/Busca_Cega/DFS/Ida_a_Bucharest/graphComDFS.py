@@ -38,23 +38,35 @@ class graphComDFS(graph):
 
     def buscaComDFS(self, vert1: str, vert2: str):
         vv = [vert1]
-        return self.DFS(vert1,vert2,vv).copy()
+        return self.DFS(vert1,vert2,vv,[]).copy()
 
 
-    def DFS(self, nv: str, dv: str, vv: list) -> list:
+    def DFS(self, nv: str, dv: str, vv: list, stack: list) -> list:
+
+        #edges = [e for e in self.verts[nv]]
+
+        #edges = sorted(edges)
+
+        #for e in edges:
         for e in self.verts[nv]:
-            
             ov = None
+
             if e.vert1 == nv:
                 ov = e.vert2
             else:
                 ov = e.vert1
-            
-            if dv == ov:
-                vv.append(dv)
-                return vv.copy()
-            
-            elif ov not in vv:
-                vv.append(ov)
-                return self.DFS(ov,dv,vv.copy())
 
+            if ov in vv:
+                continue
+            else:
+                stack.append([ov,[*vv, ov]])
+
+        ov = stack[-1][0]
+        vv = stack[-1][1]
+
+        stack.pop()
+        
+        if ov == dv:
+            return vv.copy()
+        else:
+            return self.DFS(ov,dv,vv.copy(),stack)
