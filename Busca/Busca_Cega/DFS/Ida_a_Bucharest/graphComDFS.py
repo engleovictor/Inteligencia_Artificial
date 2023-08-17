@@ -4,45 +4,18 @@ sys.path.append('/home/laplace/Projects/Inteligencia_Artificial/Busca/Busca_Cega
 from graph import graph
 
 class graphComDFS(graph):
-    # def buscaComDFS(self, vert1: str, vert2: str):
-        
-    #     alrverts = set()
-        
-    #     qverts = [[vert1,[]]]
-
-    #     av = None
-    #     nv = None
-
-    #     while nv != vert2:
-    #         nv = qverts[-1][0]
-    #         av = qverts[-1][1].copy()
-    #         qverts.pop()
-
-    #         if av.__len__() >= self.__len__():
-    #             return av.append(vert2 == av[-1])
-            
-    #         if nv in alrverts:
-    #             continue
-    #         else:
-    #             alrverts.add(nv)
-
-    #         av.append(nv)
-
-    #         for e in self.verts[nv]:
-    #             if e.vert1 == nv:
-    #                 qverts.append([e.vert2,av])
-    #             else:
-    #                 qverts.append([e.vert1,av])
-            
-    #     return av            
-
+   
     def buscaComDFS(self, vert1: str, vert2: str):
-        vv = [vert1]
-        return self.DFS(vert1,vert2,vv,[]).copy()
+        return self.DFS(vert1,vert2,[[vert1,[vert1]]]).copy()
 
 
-    def DFS(self, nv: str, dv: str, vv: list, stack: list) -> list:
+    def DFS(self, nv: str, dv: str, stack: list) -> list:
 
+        nv = stack[-1][0]
+        vv = stack[-1][1]
+
+        stack.pop()
+        
         #edges = [e for e in self.verts[nv]]
 
         #edges = sorted(edges)
@@ -61,12 +34,8 @@ class graphComDFS(graph):
             else:
                 stack.append([ov,[*vv, ov]])
 
-        ov = stack[-1][0]
-        vv = stack[-1][1]
-
-        stack.pop()
         
-        if ov == dv:
+        if nv == dv:
             return vv.copy()
         else:
-            return self.DFS(ov,dv,vv.copy(),stack)
+            return self.DFS(nv,dv,stack)
