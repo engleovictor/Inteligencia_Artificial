@@ -9,8 +9,8 @@ from edge import edge
 
 class graphComBuscaUniforme(graph):
     def mostrarCaminhoDePara(self, vert1: str, vert2: str) -> list:
-        ways = []
         # alrverts = set()
+        ways = []
         heapq.heappush(ways,way(vert1,[],0.))
 
         nv = None
