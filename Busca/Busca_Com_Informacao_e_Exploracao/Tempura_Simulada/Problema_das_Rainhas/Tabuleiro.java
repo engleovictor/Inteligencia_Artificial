@@ -1,8 +1,17 @@
+// Tempura Simulada!
+import java.util.Random;
+import java.lang.Math;
+//
+
 public class Tabuleiro {
     
     private int size;
     private int stats[][];
     private int queen_pos[];
+    private Random gen;
+    private double alfa;
+    public double Temp;
+    
 
     public Tabuleiro(int size) {
         this.size = size;
@@ -14,6 +23,14 @@ public class Tabuleiro {
             
             queen_pos[i] = 0; // j; 
         }
+
+        //
+        //    TEMPURA SIMULADA
+        this.gen  = new Random();
+        this.alfa = 0.98;
+        this.Temp = 10000000;
+
+        //
     }
 
     public void movQueenTo(int queen_p, int new_position) {
@@ -80,29 +97,39 @@ public class Tabuleiro {
 
     //
 
-    public void MountClimbing() {
-        int line = 0, column = 0;
-        int min_heuristic = this.size*(this.size-1)/2;
+    public void SimulatedAnnealing(int max_j) {
         this.updateTabuleiro();
+        int line = 0, column = 0;
 
-        while(true) {
+        int j = 0;
+
+        while(j< max_j) {
+            int max_iters    = 10000;
+            int max_sucessos = 1000;
             
-            boolean no_more = true;
+            int iter     = 0;
+            int sucessos = 0;
 
-            for(int i=0;i<this.size;i++) {
-                for(int j=0;j<this.size;j++) {
-                    if(this.stats[i][j] < min_heuristic) {
-                        no_more = false;
-                        min_heuristic = this.stats[i][j];
-                        line = i;
-                        column = j;
-                    }
+            while(iter <= max_iters && sucessos <= max_sucessos) {
+                line        = this.gen.nextInt(this.size);
+                column      = this.gen.nextInt(this.size);
+
+                int next    = this.stats[line][column];
+                int current = this.stats[0][this.queen_pos[0]];
+                
+                int delta   = next - current;
+
+                double rd   = this.gen.nextDouble(1);
+
+                if(delta < 0 || rd <= Math.exp(-delta/this.Temp)) { // Sucesso!!
+                    sucessos++;
+                    this.movQueenTo(line, column);
+                    this.updateTabuleiro();
                 }
             }
 
-            if(no_more) break;
-            this.movQueenTo(line, column);
-            this.updateTabuleiro();
+            this.Temp *= this.alfa;
+            j++;
         }
 
     }
@@ -112,7 +139,7 @@ public class Tabuleiro {
 
         for(int i=0;i<this.size;i++) {
             for(int j=0;j<this.size;j++) {
-                ret += (this.queen_pos[i] == j ? '1' : '0') + " " + Integer.toString(this.stats[i][j]);
+                ret += (this.queen_pos[i] == j ? '1' : '0') ;//+ " " + Integer.toString(this.stats[i][j]);
                 ret += " ";
             } 
             ret += "\n";
@@ -123,9 +150,8 @@ public class Tabuleiro {
 
     public static void main(String[] args) {
         Tabuleiro a = new Tabuleiro(8);
-        a.updateTabuleiro();
         System.out.println(a.getTabuleiro());
-        a.MountClimbing();
+        a.SimulatedAnnealing(2000);
         System.out.println(a.getTabuleiro());
     }
 }
