@@ -112,7 +112,7 @@ public class Tabuleiro {
 
         for(int i=0;i<this.size;i++) {
             for(int j=0;j<this.size;j++) {
-                ret += (this.queen_pos[i] == j ? '1' : '0') + " " + Integer.toString(this.stats[i][j]);
+                ret += (this.queen_pos[i] == j ? '1' : '0');// + " " + Integer.toString(this.stats[i][j]);
                 ret += " ";
             } 
             ret += "\n";
@@ -122,7 +122,7 @@ public class Tabuleiro {
     }
 
     public static void main(String[] args) {
-        Tabuleiro a = new Tabuleiro(8);
+        Tabuleiro a = new Tabuleiro(6);
         a.updateTabuleiro();
         System.out.println(a.getTabuleiro());
         a.MountClimbing();
